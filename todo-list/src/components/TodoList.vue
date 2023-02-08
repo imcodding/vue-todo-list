@@ -1,9 +1,9 @@
 <template>
   <div>
     <ul>
-      <li v-for="todoItem in todoItems" v-bind:key="todoItem" class="shadow">
+      <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
         {{todoItem}}
-        <span class="removeBtn">
+        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
@@ -16,6 +16,12 @@ export default {
   data: function() {
     return {
       todoItems: []
+    }
+  },
+  methods: {
+    removeTodo: function(todoItem, index) {
+      localStorage.removeItem(todoItem);
+      this.todoItems.splice(index, 1);
     }
   },
   //인스턴스가 생성되자마자 호출되는 lifecycle hook
