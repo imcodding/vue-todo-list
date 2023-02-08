@@ -5,6 +5,9 @@
     <TodoList></TodoList>
     <TodoFooter></TodoFooter>
   </div>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+  </head>
 </template>
 
 <script>
@@ -34,7 +37,7 @@ input {
   border-style: groove;
   width: 200px;
 }
-botton {
+button {
   border-style: groove;
 }
 .shadow {
