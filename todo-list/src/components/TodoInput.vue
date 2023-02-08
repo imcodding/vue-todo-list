@@ -1,6 +1,6 @@
 <template>
   <div class="inputBox">
-    <input type="text" v-model="newTodoItem" /><!-- v-model: input text 값을 동적으로 저장 -->
+    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo"/><!-- v-model: input text 값을 동적으로 저장 -->
     <span class="addContainer" v-on:click="addTodo">
       <i class="fas fa-plus addBtn"/>
     </span>
@@ -17,8 +17,7 @@ export default {
   methods: {
     addTodo: function() {
       if(this.newTodoItem != '') {
-        var obj = {completed: false, item: this.newTodoItem};
-        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+        this.$emit('addTodoItem', this.newTodoItem);
         this.clearInput();
       }
     },
