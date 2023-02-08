@@ -2,7 +2,11 @@
   <div>
     <ul>
       <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-        {{todoItem}}
+        <i class="checkBtn fas fa-check" 
+          v-bind:class="{checkBtnCompleted: todoItem.completed}"
+          v-on:click="toggleComplete(todoItem, index)">
+        </i>
+        <span v-bind:class="{textCompleted: todoItem.completed}">{{todoItem.item}}</span>
         <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
           <i class="fas fa-trash-alt"></i>
         </span>
@@ -22,13 +26,17 @@ export default {
     removeTodo: function(todoItem, index) {
       localStorage.removeItem(todoItem);
       this.todoItems.splice(index, 1);
+    },
+    toggleComplete: function(todoItem) {
+      todoItem.completed = !todoItem.completed;
     }
   },
   //인스턴스가 생성되자마자 호출되는 lifecycle hook
   created: function() {
     if(localStorage.length > 0) {
       for(var i = 0; i < localStorage.length; i++) {
-        this.todoItems.push(localStorage.key(i));
+        var item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        this.todoItems.push(item);
       }
     }
   }
@@ -53,7 +61,7 @@ li {
   border-radius: 5px;
 }
 .checkBtn {
-  line-height: 45px;
+  line-height: 50px;
   color: #62acde;
   margin-right: 5px;
 }
