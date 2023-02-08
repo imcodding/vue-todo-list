@@ -2,7 +2,11 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-    <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></TodoList>
+    <TodoList 
+      v-bind:propsdata="todoItems" 
+      v-on:removeItem="removeOneItem"
+      v-on:toggleItem="toggleOneItem">
+    </TodoList>
     <TodoFooter></TodoFooter>
   </div>
   <head>
@@ -32,6 +36,13 @@ export default {
     removeOneItem: function(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
+    },
+    toggleOneItem: function(todoItem, index) {
+      // todoItem.completed = !todoItem.completed;
+      // 위의 방식과 동작은 동일하지만, 컴포넌트 간의 구분을 명확히 해주는 것이 좋음.
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.removeItem(todoItem);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
     }
   },
   //인스턴스가 생성되자마자 호출되는 lifecycle hook
