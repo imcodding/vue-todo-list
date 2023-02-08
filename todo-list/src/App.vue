@@ -7,7 +7,7 @@
       v-on:removeItem="removeOneItem"
       v-on:toggleItem="toggleOneItem">
     </TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
   </div>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -43,6 +43,10 @@ export default {
       this.todoItems[index].completed = !this.todoItems[index].completed;
       localStorage.removeItem(todoItem);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
+    },
+    clearAllItems: function() {
+      localStorage.clear();
+      this.todoItems = [];
     }
   },
   //인스턴스가 생성되자마자 호출되는 lifecycle hook
