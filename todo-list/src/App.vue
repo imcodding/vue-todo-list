@@ -2,8 +2,7 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-    <TodoList 
-      v-bind:propsdata="todoItems" 
+    <TodoList  
       v-on:removeItem="removeOneItem"
       v-on:toggleItem="toggleOneItem">
     </TodoList>
@@ -47,15 +46,6 @@ export default {
     clearAllItems() {
       localStorage.clear();
       this.todoItems = [];
-    }
-  },
-  //인스턴스가 생성되자마자 호출되는 lifecycle hook
-  created() {
-    if(localStorage.length > 0) {
-      for(let i = 0; i < localStorage.length; i++) {
-        const item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        this.todoItems.push(item);
-      }
     }
   },
   components: {
