@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition-group name="list" tag="ul">
-      <li v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem" class="shadow">
+      <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem" class="shadow">
         <i class="checkBtn fas fa-check" 
           v-bind:class="{checkBtnCompleted: todoItem.completed}"
           v-on:click="toggleComplete(todoItem, index)">
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   methods: {
     removeTodo(todoItem, index) {
@@ -25,6 +27,18 @@ export default {
       this.$store.commit('toggleOneItem', { todoItem, index })
     }
   },
+  computed: {
+    /*
+    vue에서 권고하는 가이드
+    <template></template> 안에서는 가급적이면
+    자바스크립트 연산이나 전체적인 속성 조건은 줄이는 게 좋음
+    깔끔하게 표현하기 위한 연산은 컴폼넌트 내부 로직 안에서 하는 것이 좋음
+    */
+    // todoItems() {
+    //   return this.$store.getters.storedTodoItems
+    // }
+    ...mapGetters(['storedTodoItems'])
+  }
 }
 </script>
 
