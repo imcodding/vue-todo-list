@@ -4,10 +4,10 @@
       <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem" class="shadow">
         <i class="checkBtn fas fa-check" 
           v-bind:class="{checkBtnCompleted: todoItem.completed}"
-          v-on:click="toggleComplete(todoItem, index)">
+          v-on:click="toggleComplete({todoItem, index})">
         </i>
         <span v-bind:class="{textCompleted: todoItem.completed}">{{todoItem.item}}</span>
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+        <span class="removeBtn" v-on:click="removeTodo({todoItem, index})">
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   methods: {
-    removeTodo(todoItem, index) {
-      this.$store.commit('removeOneItem', { todoItem, index })
-    },
-    toggleComplete(todoItem, index) {
-      this.$store.commit('toggleOneItem', { todoItem, index })
-    }
+    ...mapMutations({
+      //기존 메서드명(template에서 호출하는 함수) : mutation
+      //인자를 따로 선언해주지 않아도 넘겨줌
+      removeTodo: 'removeOneItem',
+      toggleComplete: 'toggleOneItem'
+    }),
   },
   computed: {
     /*
